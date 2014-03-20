@@ -1,0 +1,47 @@
+import random
+
+sherlock = open('sherlock-normalized.txt', 'r').read
+sherlock[100:200]
+
+# look at each word
+# look at the next word in the sequence
+# add the next word to the list of words following the first word
+
+list(enumerate(['a', 'b', 'c'])) [(0, 'a'), (1, 'b'), (2, 'c')]
+
+class Markov(object):
+	def __init__(self, source):
+		self.source = source
+		self.probs = self.process()
+
+	def process(self):
+		words = self.source.split()
+		probs = {}
+		for i, word in enumerate(words):
+			probs.setdefault(word, [])
+			try:
+				probs[word].append(words[i+1])
+			except IndexError:
+				pass
+		return probs
+
+	def congress(self, count):
+		words = [
+			random.choice(self.probs)
+		]
+	# while we have less than the desired words...
+	while len(words) <= count:
+		current = words[-1]
+	try:
+		poss = self.probs[current]
+	except KeyError:
+		break
+		next_word = random.choice(poss)
+
+		words.append(next_word)
+		
+	# finally, return the words joined by a space
+		return ' '.join(words)
+
+s = Markov(sherlock)
+s.congress(5)
